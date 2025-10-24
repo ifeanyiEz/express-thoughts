@@ -1,4 +1,4 @@
-# express-thoughts
+# Express Thoughts
 ## Blog Application
 Express Thoughts blog was created as a capstone project for the Complete Full-Stack Web Development Bootcamp course, taught by Dr. Angela Yu, on Udemy.
 Project Description: The goal of this project is to create a Blog web application using Node.js, Express.js, and EJS. 
