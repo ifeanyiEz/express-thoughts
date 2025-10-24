@@ -1,0 +1,94 @@
+<%- include("partials/header.ejs") %>
+
+<div class="p-5 rounded two-divs">
+    <h2 class="blog-view-title">Expression of Thoughts</h2>
+    <div class="two-cols">
+        <div class="first-col">
+            <h5 class="blog-view-subtitle blue-text regular-text">The Silent Superpower That Moves the World</h5>
+            <p>
+                The ability to properly articulate one's thoughts and present them in a clear, coherent, and effective way, is a skill that can arguably be described as rare. Having the skill to take what's in one's mind (be they thoughts, ideas, or feelings) and express them in a way that an audience can effortlessly understand, relate to, and potentially be stirred up emotionally — whether through spoken words, written, or even non-verbal communication, is, in my opinion, as close to a superpower as it gets.
+            </p> 
+            <p>
+                This skill — this superpower — sits as the core foundation of successful relationships, of teamwork, leadership, problem-solving, and persuasion. Without it, even the best ideas can be misunderstood, ignored, or dismissed outright. When honed, the potential for astounding accomplishments is beyond human imagination. Think 'Tower of Babel', and its aftermath, if you are a reader of biblical folklore.
+            </p> 
+            <!-- <h5>The Silent Struggle Behind Every Unexpressed Idea</h5> -->
+            <p>
+                For most people though, the challenge is not the absence of thoughts but the inability to give those thoughts shape and form. Our minds are constantly brimming with opinions, dreams, emotions, questions, and ideas, but until they are articulated, they remain locked within us—a treasure chest of potential that the world never gets to see. Imagine a world where da Vinci never sketched, where Shakespeare never wrote, where Martin Luther King never spoke. These weren't just men with ideas and dreams; they were men who gave life to their thoughts. They transformed their internal realities into shared experiences that changed how people saw the world.
+            </p>
+            <p>
+                Yet, for every da Vinci, there are countless others whose ideas remain unseen not because they are unworthy but because they are unexpressed. For every King Jr., there are a myriad others who are like Yellowstone Caldera, the sleeping giant, a volcano rumbling with magma deep beneath, but never erupting in nearly a million years.
+            </p> 
+        </div>
+        <div id="homePage-img" class="bottom-area my-p2 second-col sec-col-bg">
+            <div class="homepage-cta">
+                <% if (locals.thisLogin && thisLogin.email) { %>
+                    <div class="d-grid bg-shadow">
+                        <button class="btn btn-light" type="link"><a class="nav-link" href="/new-blog">Start a Conversation</a></button>
+                    </div>
+                <% } else { %>
+                    <div class="d-grid bg-shadow">
+                        <button class="btn btn-light" type="link"><a class="nav-link" href="/login">Start a Conversation</a></button>
+                    </div>
+                <% } %>
+                <div class="d-grid">
+                    <button class="btn btn-orange" type="button"><a class="nav-link" href="/blogs">Join a Conversation</a></button>
+                </div>
+            </div> 
+        </div>
+    </div>
+    <div class="two-columns">
+        <div>
+            <h5 class="blog-view-subtitle blue-text regular-text">Be Authentic And Stand Out</h5>
+            <p>
+                In a world characterized by chaos and filled with proverbial empty barrels, authentic thoughts are bound to stand out. Your unique perspective, shaped by your experiences, values, struggles, and triumphs, deserves to be heard. It may not always be polished, and it may not meet global standards, but it will always be you. It takes courage to share a new or unpopular opinion, speak when everyone else is silent, reveal a personal truth, or publish a piece of writing. Expressing yourself makes you visible, and being visible invites scrutiny. But it also exposes you to like-minded people, it invites connection, opportunity, and growth.
+            </p>
+            <p>
+                The irony is that the majority of people who have the most meaningful things to say are often the most quiet. But silence doesn't serve the world. Voice does.
+            </p>
+            <h5 class="blog-view-subtitle blue-text regular-text">Welcome to "<span class="bold-text">Express Thoughts</span>"</h5>
+
+            <p>
+                For years, I've wrestled with the challenge of articulating my thoughts. I've had opinions I was too hesitant to share, ideas that died in notebooks, emotions that never made it into conversations. But I've come to believe that thought left unexpressed is thought unrealized.
+            </p>
+            <p>
+                So I created <span class="vbold-text">Express Thoughts</span> — a blog that will serve as a canvas for thoughts on a wide range of topics: life, creativity, leadership, technology, human behavior, faith, personal growth, mental health, human society, and much more. It's a place where I hope to practice the art of expression, refine my thinking, and invite others to join in meaningful conversations. Some posts will be raw and personal, others may be bold and provocative. But all will be honest.
+            </p>
+            <p>
+                Whether you're a kindred thinker, a curious visitor, or someone who simply stumbled in, you are welcome. I invite you to read, reflect, respond, and maybe even allow yourself to be stirred to express your own thoughts. Because the world needs more voices — not echoes, and expression, I believe, is where thought becomes legacy.
+            </p>
+        </div>
+        <div class="grey-bg vlarge-tbm new-blog-form">
+            <h5 class="blue-text regular-text centered-text">"<span class="vbold-text">Express Thoughts</span>" as a Capstone Project
+            </h5>
+            <p class="small-text xtiny-bm"><span class="vbold-text">Express Thoughts</span> blog was created as a capstone project for the <a href="https://www.udemy.com/course/the-complete-web-development-bootcamp/">Complete Full-Stack Web Development Bootcamp</a> course, taught by Dr. Angela Yu, on Udemy.</p> 
+            <p class="small-text xtiny-bm"><span class="vbold-text">Project Description</span>: The goal of this project is to create a Blog web application using Node.js, Express.js, and EJS. The application allows users to create, view and edit blog posts. Blog posts do not persist between sessions as <span class="vbold-text">no database was used</span> in this version of the application.</p>
+            <p class="small-text xtiny-bm">The project was built to meet the capstone expectations, in terms of the deliverables as well as the feature and technical requirements. But I have added a few extras to make it stand out and to fully test my understanding of the entire course content leading up to the capstone.</p>
+            <p class="small-text xtiny-bm">Here is a brief description of some of my main extras:</p>
+            <div class="two-columns">
+                <div id="project-requirements" class="blogItem">
+                    <div class="vtiny-bm">
+                        <h6 class="blue-text bold-text">Home and About Pages</h6>
+                        <p class="small-text xtiny-bm">I included a home page designed to be a welcoming space that inspires visitors to engage with their own thoughts. It reflects the blog's core philosophy: <span class="bold-text">that authentic thoughts have the potential to shape the world, and deserve to be shared</span>. I also included an about page that presents the blog's core philosophy, and my extra features - which you are currently reading.</p>
+                    </div>
+                    <div class="vtiny-bm">
+                        <h6 class="blue-text bold-text">Login and Sign Up</h6>
+                        <p class="small-text xtiny-bm">Users will be able to read existing blog posts. However, to be able to write a new post or update one, users are required to create an account and login. <span class="vbold-text">Note that user accounts do not persist between sessions.</span></p>
+                    </div>
+                </div>
+                <div id="project-requirements" class="blogItem">
+                    <div class="vtiny-bm">
+                        <h6 class="blue-text bold-text">Comments and Reactions</h6>
+                        <p class="small-text xtiny-bm">Users will be able to comment on and react to existing blog posts, upon login. Note also that since there's no database,<span class="vbold-text"> comments and reactions do not persist between sessions.</span> Unfortunately, I handed-in my work before completing the codes for reactions (likes, dislikes and favourites). That means that users are able to add comments to the main post, but not able to react to posts or comments.</p>
+                    </div>
+                    <div class="vtiny-bm">
+                        <h6 class="blue-text bold-text">Other Incomplete Extras</h6>
+                        <p class="small-text xtiny-bm">I included a subscription form in the main footer, to complete the blog project with a call to action feature for visitors. I decided, for no particular reason, to skip the form submission before handing-in my project.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<%- include("partials/footer.ejs") %>

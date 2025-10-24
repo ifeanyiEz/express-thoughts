@@ -1,0 +1,287 @@
+
+<%- include("partials/header.ejs") %>
+
+<div class="my-px-6 my-py-3 rounded">
+    <% if (locals.thisPost && thisPost.slug) { %>
+     <div class="two-divs">
+        <div class="tiny-bm">
+            <button type="link" class="btn btn-sm btn-light bold-text yellow-bg-shadow">
+                <a class="nav-link" href="/blogs">
+                    <i class="bi bi-arrow-left-square-fill"></i>
+                    Back to All Blogs</a>
+            </button>
+        </div>
+        <div class="create-cols vlarge-bm">
+            <div class="two-divs">
+                <h2 class="blog-view-subtitle vlarge-bm"><%= thisPost.title %></h2>
+                <img class="img-hero-view large-bm" src="<%= thisPost.heroImage %>" alt="Blog Hero Image">
+                <div class="one-blog-view">
+                    <div id="onThisPage" class="blog-view-divs tiny-bm">
+                        <h4 class="xtiny-bm regular-text blue-text">On this Page</h4>
+                        <hr class="tiny-bm">
+                        <ul class="vbold-text small-text"></ul>
+                    </div>
+                    <div id="blogBody" class="tiny-bm">
+                        <%- thisPost.blogBody %>
+                        <% if (locals.thisLogin && thisLogin.email && thisLogin.email === "ezugworie.ofor@gmail.com") { %>
+                            <div class="right-text tiny-tbm">
+                                <button type="link" class="btn btn-sm btn-light bold-text yellow-bg-shadow">
+                                    <a class="nav-link" href="/blogs/<%= thisPost.slug %>/edit">
+                                    Set as featured post</a>
+                                </button>
+                            </div>
+                        <% } %>
+                    </div>
+                </div>
+            </div>
+            <div class="p-5 blog-view-divs">
+                <div class="large-bm">
+                    <h4 class="xtiny-bm regular-text blue-text">About this Blog Post</h4>
+                    <hr class="tiny-bm">
+                    <div class="two-divs">
+                        <div class="about-blog">
+                            <h6 class="xtiny-bm vbold-text small-text">Category</h6>
+                            <h6 class="xtiny-bm regular-text white-text small-text"><span class="categ-bg"><%= thisPost.blogCategory %></span></h6>
+                        </div>
+                        <div class="about-blog">
+                            <h6 class="xtiny-bm vbold-text small-text">Sub-category</h6>
+                            <h6 class="xtiny-bm bold-text small-text"><%= thisPost.subCategory %></h6>
+                        </div>
+                        <div class="about-blog">
+                            <h6 class="xtiny-bm vbold-text small-text">Written By</h6>
+                            <h6 class="xtiny-bm bold-text small-text"><%= thisPost.writtenBy %></h6>
+                        </div>
+                        <div class="about-blog">
+                            <h6 class="xtiny-bm vbold-text small-text">Writer's Email</h6>
+                            <h6 class="xtiny-bm bold-text blue-text small-text"><%= thisPost.contactEmail %></h6>
+                        </div>
+                        <div class="about-blog">
+                            <h6 class="xtiny-bm vbold-text small-text">Date Published</h6>
+                            <h6 class="xtiny-bm bold-text blue-text small-text"><%= thisPost.publishedAt %></h6>
+                        </div>
+                        <% if (thisPost.lastEditedDate) { %>
+                            <div class="about-blog">
+                                <h6 class="xtiny-bm vbold-text small-text">Last Updated</h6>
+                                <h6 class="xtiny-bm bold-text blue-text small-text"><%= thisPost.lastEditedDate %></h6>
+                            </div>
+                        <% } %>
+                    </div>
+                </div>
+                <div class="large-bm">
+                    <% if (thisPost.tags.length > 0) { %>
+                        <h4 class="xtiny-bm regular-text blue-text">Key Words</h4>
+                        <hr class="tiny-bm">
+                        <% thisPost.tags.forEach(function(tagItem) { %>
+                            <h6 class="tag-div regular-text xtiny-bm smaller-text white-text tag-bg"><%= tagItem %></h6>
+                        <% }); %>
+                    <% } %>
+                </div>
+                <div class="large-bm">
+                    <h4 class="xtiny-bm regular-text blue-text">Reactions</h4>
+                    <hr class="tiny-bm">
+                    <div id="reactions" class="socials">
+                        <div id="like" class="react">
+                            <p class="bold-text no-bm">Like</p>
+                            <i class="bi bi-hand-thumbs-up-fill"></i>
+                            <div class="bold-text no-bm">
+                                <% if (thisPost.likes) { %>
+                                    <%= thisPost.likes.length %>
+                                <% } else { %>
+                                    0
+                                <%} %>
+                            </div>
+                        </div>
+                        <div id="dislike" class="react">
+                            <p class="bold-text no-bm">Dislike</p>
+                            <i class="bi bi-hand-thumbs-down-fill"></i>
+                            <div class="bold-text no-bm">
+                               <% if (thisPost.dislikes) { %>
+                                    <%= thisPost.dislikes.length %>
+                                <% } else { %>
+                                    0
+                                <% } %>
+                            </div>
+                        </div>
+                        <div id="favourite" class="react">
+                            <p class="bold-text no-bm">Favourite</p>
+                            <i class="bi bi-star-fill"></i>
+                            <div class="bold-text no-bm">
+                                <% if (thisPost.favourites) { %>
+                                    <%= thisPost.favourites.length %>
+                                <% } else { %>
+                                    0
+                                <% } %>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="large-bm">
+                    <h4 class="xtiny-bm regular-text blue-text">Comments</h4>
+                    <hr class="tiny-bm">
+                    <% if (locals.thisLogin && thisLogin.email) { %>
+                        <form class="form-flex" id="commentForm">
+                            <div class="d-flex flex-column flex-sm-row w-100 gap-2 tiny-bm"> 
+                                <label for="comment" class="visually-hidden">Share your opinion</label>
+                                <textarea name="comment" id="comment" class="form-control small-text" placeholder="Type your opinion here." required></textarea>
+                                <button class="btn btn-primary my-px-1 bold-text" type="submit">Share</button> 
+                            </div>
+                        </form>
+                    <% } else { %>
+                        <div class="blog-view-meta large-bm">
+                            <h6>Login to join the conversation!</h6>
+                            <button type="link" class="btn btn-sm btn-primary bold-text">
+                                <a class="nav-link" href="/login">
+                                Click to Login</a>
+                            </button>
+                        </div>
+                    <% } %>
+                    <div id="commentsList">
+                        <% if (thisPost.comments.length > 0) { %>
+                            <% thisPost.comments.forEach(function(commentItem) {%>
+                                <div class="blog-view-divs xtiny-bm">
+                                    <h6 class="xtiny-bm regular-text small-text"><%= commentItem.comment %> 
+                                        <% if (commentItem.commentBy) { %>
+                                            <span class="vbold-text blue-text smaller-text">By: <%= commentItem.commentBy %></span>
+                                        <% } %> 
+                                    </h6>
+                                </div>
+                                <div class="comment-social tiny-bm">
+                                    <p class="bold-text smaller-text">
+                                        <% if (commentItem.time) { %>
+                                            <%= commentItem.time %>
+                                        <% } %>
+                                    </p>
+                                    <p class="bold-text smaller-text">
+                                        <% if (commentItem.likes) { %>
+                                            <i class="bi bi-hand-thumbs-up-fill"></i>
+                                            <%= " " + commentItem.likes.length %>
+                                        <% } %>
+                                    </p>
+                                    <p class="bold-text smaller-text">
+                                        <% if (commentItem.dislikes) { %>
+                                            <i class="bi bi-hand-thumbs-down-fill"></i>
+                                            <%= " " + commentItem.dislikes.length %>
+                                        <% } %>
+                                    </p>
+                                    <p class="bold-text smaller-text">
+                                        <% if (commentItem.favourites) { %>
+                                            <i class="bi bi-star-fill"></i>
+                                            <%= " " + commentItem.favourites.length %>
+                                        <% } %>
+                                    </p>
+                                </div>
+                            <% }); %>
+                        <% } else { %>
+                            <h6 id="no-comments" class="xtiny-bm bold-text">Be the first to share your opinion</h6>
+                        <% } %>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <hr class="vlarge-tbm">
+        <div class="blog-view-meta vlarge-bm">
+            <div id="return-btn">
+                <button type="link" class="btn btn-sm btn-light bold-text yellow-bg-shadow">
+                    <a class="nav-link" href="/blogs"> 
+                    <i class="bi bi-arrow-left-square-fill"></i>
+                    Back to All Blogs</a>
+                </button>
+            </div>
+            <% if (locals.thisLogin) { %>
+                <% const thisUser = thisLogin.firstName + " " + thisLogin.lastName %>
+                <% if (thisPost.writtenBy === thisUser) { %>
+                    <div id="blog-action" class="blog-action">
+                        <button type="link" class="btn btn-sm btn-light bold-text yellow-bg-shadow">
+                            <a class="nav-link" href="/blogs/<%= thisPost.slug %>/edit">
+                            Edit this Post</a>
+                        </button>
+                        <button type="link" class="btn btn-sm btn-warning bold-text" onclick="deleteBlog('<%= thisPost.slug %>')">
+                            Delete this Post
+                        </button>
+                    </div>
+                <% } %>
+            <% } %>
+        </div>
+     </div>
+    <% } else {%>
+
+    <% } %>
+</div>
+<script>
+    async function deleteBlog(slug) {
+        if (!confirm("Are you sure you want to delete this blog post?")) return;
+
+        try {
+            const response = await fetch(`/blogs/${slug}`, {
+                method: "DELETE"
+            });
+
+            const result = await response.json();
+
+            if (result.success) {
+                window.location.href = "/blogs";
+
+            } else {
+                alert(result.message || "Failed to delete blog.");
+            }
+        } catch (error) {
+            console.error("Error deleting blog:", error);
+            alert("An error occurred while deleting the blog.");
+        }
+    }
+</script>
+<script>
+    document.getElementById('commentForm').addEventListener('submit', async function(e) {
+        e.preventDefault(); // stop default form submit
+        
+        const comment = document.getElementById('comment').value.trim();
+        
+        if (!comment) return;
+
+        const slug = "<%= thisPost.slug %>";
+
+        const url = `/blogs/${slug}/comments`;
+        try {
+
+            const res = await fetch(url, {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ comment })
+            });
+
+            if (!res.ok) { 
+                alert("Failed to add comment");
+                throw new Error(`HTTP error! status: ${res.status}`); 
+            }
+
+            // Option 2: Append comment dynamically (better UX)
+            const newComment = await res.json();
+            const commentsList = document.getElementById('commentsList');
+            const newCommentDiv = document.createElement('div');
+            newCommentDiv.className = 'blog-view-divs tiny-bm';
+            newCommentDiv.innerHTML = `
+                <h6 class="xtiny-bm regular-text small-text">${newComment.comment} <span class="vbold-text blue-text smaller-text">By: ${newComment.commentBy}</span></h6>
+                <div class="comment-social">
+                    <p class="bold-text smaller-text">${newComment.time}</p>
+                    <p class="bold-text smaller-text"><i class="bi bi-hand-thumbs-up-fill"></i> ${newComment.likes.length}</p>
+                    <p class="bold-text smaller-text"><i class="bi bi-hand-thumbs-down-fill"></i> ${newComment.dislikes.length}</p>
+                    <p class="bold-text smaller-text"><i class="bi bi-star-fill"></i> ${newComment.favourites.length}</p>
+                </div>
+            `;
+            commentsList.prepend(newCommentDiv);
+            document.getElementById('comment').value = ""; // Clear the textarea
+
+            const noComments = document.getElementById("no-comments");
+            if (noComments) {
+                noComments.classList.add("hidden"); // Hide the element with id === no-comments
+            }
+
+
+        } catch (e) {
+            console.error("Ajax error:", e);
+            // return;
+        }
+    });
+</script>
+
+<%- include("partials/footer.ejs") %>

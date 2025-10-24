@@ -1,0 +1,247 @@
+<%- include("partials/header.ejs") %>
+
+<div class="p-5 rounded two-divs">
+    <div class="centered-text">
+        <h2 class="blog-view-title">Express Thoughts Blog Posts</h2>
+        <h2 class="blog-view-subtitle regular-text blue-text">Read, write, share your thoughts . . . shape the world!</h2>
+    </div>
+    <% if (locals.allBlogs && allBlogs.length > 0) { %>
+        <div id="all-blogs-view" class="all-blogs-view">
+            <div id="blog-view-left" class="my-py-3">
+                <div id="blogs-side" class="xlarge-bm">
+                    <div id="blogs-side-nav" class="my-p2">
+                        <button id="accord1" class="accordion-btn btn" type="link">
+                            <a class="nav-link" href="/blogs"><span class="vbold-text blue-text">All Posts</span></a>
+                        </button>
+                        <button id="accord2" class="accordion btn">
+                            <span class="vbold-text blue-text">By Category</span>
+                        </button>
+                        <div id="accord2-target" class="listCategories">
+                            <ul class="all-blog-ul">
+                                <% if (locals.categories) { %>
+                                    <% categories.forEach(function(category) { %>
+                                        <li class="all-blog-li small-text bold-text"><a href="/blogs/category/<%= category.catSlug %>"><%= category.catName %></a></li>
+                                    <% }) %>
+                                <% } %>
+                            </ul>
+                        </div>
+                        <button id="accord3" class="sb-accordion btn">
+                            <span class="vbold-text blue-text">By Sub-Category</span>
+                        </button>
+                        <div id="accord3-target" class="listSubCategories">
+                            <ul class="all-blog-ul"> </ul>
+                        </div>
+                    </div>
+                    <div class="logout-div my-p2">
+                        <% if (locals.thisLogin && thisLogin.email) { %>
+                            <div class="d-grid bg-shadow tiny-bm">
+                                <button class="btn btn-primary" type="link"><a class="nav-link" href="/new-blog">New Post</a></button>
+                            </div>
+                            <div class="d-grid">
+                                <button type="link" class="btn btn-orange regular-text bg-shadow"><a class="nav-link" href="/logout">Click to Logout</a></button>
+                            </div>
+                        <% } else { %>
+                            <div class="d-grid bg-shadow">
+                                <button class="btn btn-primary" type="link"><a class="nav-link" href="/login">New Post</a></button>
+                            </div>
+                        <% } %>
+                    </div>
+                </div>
+            </div>
+            <div class="p-5">
+                <!-- <hr class="large-bm"> -->
+                <div id="blog-view-right" class="vlarge-bm">
+                    <% allBlogs.forEach(function(blogPost) { %>
+                        <div class="blogItem">
+                            <img class="img-hero-view tiny-bm" src="<%= blogPost.heroImage %>" alt="Blog Hero Image">
+                            <h5 class="vtiny-bm regular-text"><%= blogPost.title %></h5>
+                            <div class="blog-view-meta">
+                                <p class="xtiny-bm"><small class="regular-text white-text categ-bg"><%= blogPost.blogCategory %></small></p>
+                                <p class="vtiny-bm right-text"><small class="vbold-text blue-text"><%= blogPost.publishedAt %></small></p>
+                            </div>
+                            <div class="xtiny-bm xtiny-sm right-text">
+                                <a href="/blogs/<%= blogPost.slug %>">
+                                    <button class="btn btn-sm btn-light bold-text blue-text yellow-bg-shadow" type="button"> Read the full post</button>
+                                </a>
+                            </div>
+                            <div class="bottom-area my-py-2">
+                                <div id="socials" class="socials">
+                                    <div id="comments" class="">
+                                        <p class="small-text bold-text">Comments: <span class="vbold-text"><%= " " + blogPost.comments.length %></span></p>
+                                    </div>
+                                    <div id="likes" class="">
+                                        <p class="small-text bold-text">Likes: <span class="vbold-text"><%= " " + blogPost.likes.length %></span></p>
+                                    </div>
+                                    <div id="favs" class="">
+                                        <p class="small-text bold-text">Favourites: <span class="vbold-text"><%= " " + blogPost.favourites.length %></span></p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    <% }); %>
+                </div>
+            </div>
+        </div>
+    <% } else { %>
+        <div class="p-5 centered-text">
+            <h5 class="blog-view-subtitle">Sorry, there are no posts written yet. Be the first to write one! Click <a href="/login"><button class="btn btn-sm btn-primary" type="button">First Post </button></a> to begin.
+            </h5>
+        </div>
+    <% } %>
+</div>
+<script>
+    const categoryLinks = document.querySelectorAll('#accord2-target .all-blog-ul a');
+
+    const currentPath = window.location.pathname;
+    const pathSegments = currentPath.split('/');
+    const currentCategorySlug = pathSegments[pathSegments.length - 1];
+
+    categoryLinks.forEach(link => {
+        // Get the slug from the link's href attribute.
+        const linkPathSegments = link.href.split('/');
+        const linkSlug = linkPathSegments[linkPathSegments.length - 1];
+
+        // If the link's slug matches the current URL slug, highlight it.
+        if (linkSlug === currentCategorySlug) {
+            
+            link.parentElement.classList.add('vbold-text', 'blue-text');
+        }
+    });
+
+    categoryLinks.forEach(link => {
+        link.addEventListener("click", function(event) {
+            // First, remove the highlight from all other categories.
+            categoryLinks.forEach(otherLink => {
+                otherLink.parentElement.classList.remove('vbold-text', 'blue-text');
+            });
+
+            // Then, add the highlight to the clicked category.
+            event.target.parentElement.classList.add('vbold-text', 'blue-text');
+        });
+    });
+</script>
+<script>
+    const accordions = document.getElementsByClassName("accordion");
+
+    for (let acc = 0; acc < accordions.length; acc++) {
+    accordions[acc].addEventListener("click", function() {
+
+        const listCategories = this.nextElementSibling;
+        if (listCategories.style.display === "none") {
+        listCategories.style.display = "block";
+        } else {
+        listCategories.style.display = "none";
+        }
+    });
+    }
+
+    const sbAccordions = document.getElementsByClassName("sb-accordion");
+
+    for (let accs = 0; accs < sbAccordions.length; accs++) {
+    sbAccordions[accs].addEventListener("click", function() {
+
+        const listSubCategories = this.nextElementSibling;
+        if (listSubCategories.style.display === "none") {
+        listSubCategories.style.display = "block";
+        } else {
+        listSubCategories.style.display = "none";
+        }
+    });
+    }
+</script>
+<script>
+    // Convert a string to a URL-friendly slug
+    function slugify(text) {
+    return text.toString().toLowerCase()
+        .trim()
+        .replace(/[^a-z0-9\s-]/g, '')
+        .replace(/\s+/g, '-'); 
+    }
+
+    // Map of categories to sub-categories
+    const subCategoryMap = {
+        "the-human-lens": [
+            "Emotion & Psychology",
+            "Faith & Meaning",
+            "Culture & Identity",
+            "Society & Community",
+            "History & Memory",
+            "Voices from the Margins"
+        ],
+        "the-world-we-build": [
+            "Governance & Politics",
+            "Economy & Work",
+            "Law, Justice & Rights",
+            "Conflict & Peace",
+            "Cities, Nations & Borders",
+            "Globalization & Power Structures"
+        ],
+        "tomorrows-mind": [
+            "Scientific Thinking & Discovery",
+            "Emerging Technologies (AI, BioTech, Quantum)",
+            "Digital Society & Ethics (Surveillance, Data, Privacy)",
+            "Environment & Climate Science",
+            "Space & Exploration",
+            "Futurism & Existential Risks"
+        ],
+        "becoming-you": [
+            "Self-Development & Life Design",
+            "Education & Lifelong Learning",
+            "Mental Health & Resilience",
+            "Creativity & the Arts (Writing, Music, Design)",
+            "Spiritual & Emotional Growth",
+            "Purpose, Productivity & Fulfillment"
+        ]
+    };
+
+    function populateSubCategories() {
+        // Get the main category slug from the URL.
+        // The path will be something like "/blogs/category/the-human-lens"
+        const pathSegments = window.location.pathname.split('/');
+        const mainCategorySlug = pathSegments[pathSegments.length - 1];
+
+        const subCategories = subCategoryMap[mainCategorySlug];
+        const subCategoriesUl = document.querySelector('#accord3-target .all-blog-ul');
+
+        // Clear any existing list items to prevent duplicates
+        subCategoriesUl.innerHTML = '';
+
+        // If we found sub-categories, populate the list
+        if (subCategories) {
+            subCategories.forEach(subCategory => {
+                const li = document.createElement('li');
+                li.className = 'all-blog-li small-text bold-text';
+
+                const a = document.createElement('a');
+                a.textContent = subCategory;
+
+                // Create a URL for the sub-category.
+                const subCategorySlug = slugify(subCategory);
+                a.href = `/blogs/category/${mainCategorySlug}/${subCategorySlug}`;
+
+                li.appendChild(a);
+                subCategoriesUl.appendChild(li);
+            });
+        } else {
+            // Handle case where no sub-categories are found
+            const li = document.createElement('li');
+            li.className = 'all-blog-li small-text bold-text';
+            li.textContent = "No sub-categories found.";
+            subCategoriesUl.appendChild(li);
+        }
+    }
+
+    // Add an event listener to the "By Sub-Category" button
+    document.getElementById("accord3").addEventListener("click", function() {
+        // Populate the list every time the accordion is clicked to ensure it's up-to-date
+        populateSubCategories();
+    });
+
+    // Hide the list on initial load
+    document.getElementById('accord3-target').style.display = 'block';
+    window.onload = function() {
+        populateSubCategories();
+    };
+</script>
+
+<%- include("partials/footer.ejs") %>

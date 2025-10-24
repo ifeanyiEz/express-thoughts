@@ -1,0 +1,109 @@
+
+<%- include("partials/home-header.ejs") %>
+
+<section id="home-hero" class="hm-hero">
+    <div class="home-cols p-5 home-cols-bg">
+        <div class="hero-line my-p2 two-divs">
+            <h1 class="blog-view-title white-text large-text bold-text">Express Thoughts: <br> Where Thoughts Become Legacy</h1>
+            <h2 class="white-text thin-text my-py-3 shd-text-black">A canvas for authentic thoughts on life, creativity, and the human experience.</h2>
+            <div class="hero-button">
+                <a href="/blogs" class="button white-text thin-text">Join a Conversation</a>
+                <% if (locals.thisLogin && thisLogin.email) { %>
+                    <a href="/new-blog" class="button white-text thin-text">Start a Conversation</a>
+                <% } else { %>
+                    <a href="/login" class="button white-text thin-text">Start a Conversation</a>
+                <% } %>
+            </div>
+        </div>
+        <div class="hero-image my-p2"></div>
+    </div>
+</section>
+
+<section id="why-express" class="container">
+    <div class="p-5">
+        <h2 class="blog-view-title blue-text regular-text">The Value of Authenticity</h2>
+        <div class="home-cols">
+            <div class="two-divs">
+                <h5 class="regular-text tiny-bm">
+                    The ability to properly articulate one's thoughts and present them in a clear, coherent, and effective way, is a skill that . . . sits at the core of successful relationships, of teamwork, leadership, problem-solving, and persuasion. Without it, even the best ideas can be misunderstood, ignored, or dismissed outright. When honed, the potential for astounding accomplishments is beyond human imagination.
+                </h5>
+                <h5 class="regular-text tiny-bm">
+                    The challenge is not the absence of thoughts but the inability to give those thoughts shape and form. Our minds are constantly brimming with opinions, dreams, emotions, questions, and ideas, but until they are articulated, they remain locked within us—a treasure chest of potential that the world never gets to see. Imagine a world where da Vinci never sketched, where Shakespeare never wrote, where Martin Luther King never spoke. These weren't just men with ideas and dreams; they were men who gave life to their thoughts. They transformed their internal realities into shared experiences that changed how people saw the world.
+                </h5>
+                <h5 class="regular-text tiny-bm">
+                    In a world characterized by chaos and filled with proverbial empty barrels, authentic thoughts are bound to stand out. Your unique perspective, shaped by your experiences, values, struggles, and triumphs, deserves to be heard. It may not always be polished, and it may not meet global standards, but it will always be you. It takes courage to share a new or unpopular opinion, speak when everyone else is silent, reveal a personal truth, or publish a piece of writing. Expressing yourself makes you visible, and being visible invites scrutiny. But it also exposes you to like-minded people, it invites connection, opportunity, and growth.
+                </h5>
+                <h5 class="regular-text tiny-bm">The irony is that the majority of people who have the most meaningful things to say are often the most quiet . . . <span><a class="bold-text blue-text" href="/about">read the full article here</a></span>.</h5>
+            </div>
+            <div class="">
+                <div class="grey-bg author-section">
+                    <h5 class="blog-view-subtitle blue-text centered-text">About the Author</h5>
+                    <img src="/images/ifeanyi_4.2.png" alt="The Author" class="author">
+                    <p>Hi there — I'm someone who's endlessly curious about how things work and how people connect. I love building, writing, and sharing ideas that spark creativity and drive positive change. Whether I'm piecing together a new tech project, writing about cars I dream to own (hello, 2025 Toyota 4Runner!), or just exploring life's next challenge, I find joy in learning and creating.</p>
+                    <p>Express Thoughts blog is a window into that journey — a place where curiosity meets purpose. I believe that every story, line of code, or simple thought shared can inspire someone else to dream a little bigger, think a little deeper, or build something meaningful.</p>
+                    <p>So, you are indeed welcome — I'm glad you're here. Let's share thoughts and explore ideas together.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<section id="featured" class="container">
+    <hr class="vtiny-tbm">
+    <div class="p-5">
+        <h2 class="blog-view-title blue-text regular-text">Featured Thoughts</h2>
+        <% if (locals.allBlogs && allBlogs.length > 0) { %>
+            <div id="featured-blogs">
+                <% for( let blogIndex = 0; blogIndex < Math.min(allBlogs.length, 4); blogIndex++ ) { %>
+                    <div class="blogItem-container">
+                        <div class="home-blogItem bg-shadow">
+                            <img src="<%= allBlogs[blogIndex].heroImage %>" alt="Blog Hero Image" class="img-hero-view tiny-bm">
+                            <h5 class="vtiny-bm regular-text"><%= allBlogs[blogIndex].title %></h5>
+                            <div class="xtiny-bm xtiny-sm centered-text">
+                                <a href="/blogs/<%= allBlogs[blogIndex].slug %>">
+                                    <button class="btn btn-sm btn-light bold-text blue-text yellow-bg-shadow" type="button"> Join the Conversation</button>
+                                </a>
+                            </div>
+                        </div>
+                        <div class="featured-bg centered-text">
+                            <h4 class="orange-text grey-bg regular-text my-py-1"><%= allBlogs[blogIndex].blogCategory %></h4>
+                        </div>
+                    </div>
+                <% } %>
+            </div>
+        <% } %>
+    </div>
+</section>
+<section id="canvas" class="container">
+    <hr class="vtiny-tbm">
+    <div class="p-5">
+        <h2 class="blog-view-title blue-text regular-text">Explore the Canvas</h2>
+        <% if (locals.categories && categories.length > 0) { %>
+            <div id="canvas-categories">
+                <% for( let catIndex = 0; catIndex < categories.length; catIndex++ ) { %>
+                    <div class="cat-info">
+                        <div class="home-blogItem">
+                            <img src="<%= categories[catIndex].catImage %>" alt="Category Image" class="img-hero-view tiny-bm">
+                        </div>
+                        <div class="two-divs">
+                            <div class="logout-div">
+                                <h2 class="blog-view-subtitle vtiny-bm orange-text regular-text"><%= categories[catIndex].catName %></h2>
+                            </div>
+                            <h6 class="vtiny-bm black-text bold-text">Focus: <span class="regular-text"><%= categories[catIndex].catFocus %></span></h6>
+                            <h6 class="vtiny-bm black-text bold-text">Explore: <span class="regular-text"><%= categories[catIndex].catExplore %></span></h6>
+                            <div class="logout-div">
+                                <div class="vtiny-tbm xtiny-sm ">
+                                    <% if (locals.thisLogin && thisLogin.email) { %>
+                                        <a href="/new-blog"class="button-blue blue-text regular-text">Start a Conversation</a>
+                                    <% } else { %>
+                                        <a href="/login"class="button-blue blue-text regular-text">Start a Conversation</a>
+                                    <% } %>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                <% } %>
+            </div>
+        <% } %>
+    </div>
+</section>
+<%- include("partials/home-footer.ejs") %>

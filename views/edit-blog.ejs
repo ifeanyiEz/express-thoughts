@@ -1,0 +1,191 @@
+<%- include("partials/login-header.ejs") %>
+
+<div class="p-5 rounded">
+    <% if (locals.thisPost && thisLogin.email) { %>
+        <div class="two-divs">
+            <h2 class="blog-view-subtitle large-tbm">Hello, <span class="vbold-text"><%= thisLogin.firstName + " " + thisLogin.lastName %></span></h2>
+            <div class="create-cols">
+                <div class="new-blog-form grey-bg">
+                    <h4 class="blue-text vbold-text">Edit this blog post</h4>
+                    <hr class="large-bm">
+                    <form action="/blogs/<%= thisPost.slug %>/edit?_method=PATCH" method="POST" class="form-flex" id="editBlogForm">
+                        <div>
+                            <div class="form-section vtiny-bm">
+                                <div class="form-group vtiny-bm">
+                                    <label for="blogTitle" class="form-label blue-text vbold-text xtiny-bm">Blog Title</label>
+                                    <input type="text" class="form-control" name="blogTitle" id="blogTitle" value="<%= thisPost.title %>">
+                                </div>
+                                <div class="form-group vtiny-bm">
+                                    <label for="category" class="form-label blue-text vbold-text xtiny-bm">Category</label> 
+                                    <select class="form-select" name="category" id="category" required> 
+                                        <option value=""><%= thisPost.category %></option> 
+                                        <option>Humanity</option>
+                                        <option>Civilization & Power</option>
+                                        <option>Science, Technology & the Future</option>
+                                        <option>Personal Growth & Creativity</option>   
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-section vtiny-bm">
+                                <div class="form-group vtiny-bm">
+                                    <label for="subCategory" class="form-label blue-text vbold-text xtiny-bm">Sub-category</label> 
+                                    <select class="form-select" name="subCategory" id="subCategory" required> 
+                                        <option value=""><%= thisPost.subCategory %></option>  
+                                    </select>
+                                </div>
+                                <div class="form-group vtiny-bm">
+                                    <label for="heroImage" class="form-label blue-text vbold-text xtiny-bm">Hero Image URL</label>
+                                    <input type="text" class="form-control" name="heroImage" id="heroImage" value="<%= thisPost.heroImage %>">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group xtiny-bm">
+                            <label for="blogBody" class="form-label blue-text vbold-text xtiny-bm">Content</label>
+                        </div>
+                        <div id="blogBody" class="form-control tiny-bm"><%- thisPost.blogBody %></div>
+                        <input type="hidden" name="blogBody" id="hiddenBlogBody">
+                        <hr class="large-bm">
+                        <div class="form-bottom vtiny-bm">
+                            <div class="form-group vtiny-bm">
+                                <label for="createDate" class="form-label blue-text vbold-text xtiny-bm">Date Written</label>
+                                <input type="text" class="form-control" name="createDate" id="createDate" value="<%= thisPost.createDate %>" readonly>
+                            </div>
+                            <div class="form-group vtiny-bm">
+                                <label for="tags" class="form-label blue-text vbold-text xtiny-bm">Key Words</label>
+                                <input type="text" class="form-control" name="tags" id="tags" value="<%= thisPost.tags ? thisPost.tags.join(", ") : "" %>">
+                            </div>
+                        </div>
+                        <div class="form-bottom vtiny-bm">
+                            <div class="form-group vtiny-bm">
+                                <label for="writtenBy" class="form-label blue-text vbold-text xtiny-bm"> Written By</label>
+                                <input type="text" class="form-control" name="writtenBy" id="writtenBy" value="<%= thisPost.writtenBy %>" readonly>
+                            </div>
+                            <div class="form-group vtiny-bm">
+                                <label for="contactEmail" class="form-label blue-text vbold-text xtiny-bm">Contact Email</label>
+                                <input type="text" class="form-control" name="contactEmail" id="contactEmail" value="<%= thisPost.contactEmail %>" readonly>
+                            </div>
+                        </div>
+                        <% if (thisLogin.email === "ezugworie.ofor@gmail.com") { %>
+                            <div class="form-bottom vtiny-bm">
+                                <div class="input-group">
+                                    <input type="checkbox" id="featured" name="featured" value="yes">
+                                    <label for="featured" class="xtiny-sm blue-text vbold-text">Set as a featured post</label>
+                                </div>
+                            </div>
+                        <% } %>
+                        <div class="blog-action login-button">
+                            <button type="submit" class="btn btn-primary bold-text bg-shadow">Click to Update</button>
+                            <button type="link" class="btn btn-light bold-text yellow-bg-shadow">
+                            <a class="nav-link" href="/blogs/<%= thisPost.slug %>">
+                            Discard Changes</a>
+                        </button>
+                        </div>
+                    </form>
+                </div>
+                <div id="recent-blogs" class="recent-blogs">
+                    <% if (locals.allBlogs && allBlogs.length > 0) { %>
+                        <h4 class="blue-text vbold-text">Read a recently published post</h4>
+                        <hr class="large-bm">
+                        <div id="blog-list" class="form-flex">
+                            <% for( let blogIndex = 0; blogIndex < Math.min(allBlogs.length, 5); blogIndex++ ) { %>
+                                <div class="recentBlog-item">
+                                    <img class="heroImg-view vtiny-bm" src="<%= allBlogs[blogIndex]["heroImage"] %>" alt="Recent Blog Item Image">
+                                    <div class="form-flex">
+                                        <h6 class="bold-text"><%= allBlogs[blogIndex]["title"] %></h6>
+                                        <div class="recentBlog-meta">
+                                            <p class="blue-text"><%= allBlogs[blogIndex]["publishedAt"] %></p>
+                                            <h6 class="right-text"><a href="/blogs/<%= allBlogs[blogIndex]["slug"] %>"><button class="btn btn-xs btn-light bold-text blue-text yellow-bg-shadow" type="button">Read the full post</button></a></h6>
+                                        </div>
+                                    </div>
+                                </div>
+                                <hr class="vtiny-bm">
+                            <% } %>
+                        </div>
+                    <% } else {%>
+                        <h4 class="blue-text vbold-text">Your new blog will appear here</h4>
+                        <hr class="large-bm">
+                    <%} %>
+                    <div class="login-button logout-div">
+                        <button type="link" class="btn btn-warning bold-text bg-shadow"><a class="nav-link" href="/logout">Click to Logout</a></button>
+                    </div>
+                </div>
+            </div>
+        </div> 
+    <% } else {%>
+        <div class="login-form">
+            <h2 class="blog-view-subtitle large-bm">
+                Please login to write a new post.
+            </h2>
+            <div class="d-grid login-button">
+                <h5><a href="/login"><button class="btn btn-sm btn-primary" type="button">Click to Login</button></a>
+                </h5>
+            </div>
+        </div>
+    <%} %>
+</div>
+
+
+
+<script>
+    const quill = new Quill('#blogBody', { theme: 'snow' });
+
+        // Load the existing content into the editor
+        const thisPost = {
+            blogBody: '<%- thisPost.blogBody %>'
+        };
+        quill.clipboard.dangerouslyPasteHTML(thisPost.blogBody);
+
+        // Get the form and add an event listener
+        const editBlogForm = document.getElementById("editBlogForm");
+
+        editBlogForm.addEventListener("submit", async function(event) {
+            event.preventDefault();
+
+            // Gather all data from the form inputs
+            const blogTitle = document.getElementById("blogTitle").value;
+            const category = document.getElementById("category").value;
+            const subCategory = document.getElementById("subCategory").value;
+            const heroImage = document.getElementById("heroImage").value;
+            const tags = document.getElementById("tags").value;
+            const blogContent = quill.root.innerHTML; // Get Quill's HTML content
+
+            const postData = {
+                blogTitle: blogTitle,
+                category: category,
+                subCategory: subCategory,
+                heroImage: heroImage,
+                blogBody: blogContent,
+                tags: tags
+            };
+            
+            // Get the URL from the form's action attribute
+            const formAction = this.action;
+
+            // Use the Fetch API to send a PATCH request
+            try {
+                const response = await fetch(formAction, {
+                    method: 'POST', // The actual method sent by the browser
+                    headers: {
+                        'Content-Type': 'application/json' // Tell the server we are sending JSON
+                    },
+                    body: JSON.stringify(postData) // Convert the object to a JSON string
+                });
+
+                // Handle the response from the server
+                if (response.ok) {
+                    const result = await response.json();
+                    console.log("Post updated successfully:", result);
+                    // Redirect to the updated post page
+                    window.location.href = result.redirectUrl || '/blogs/' + '<%= thisPost.slug %>'; 
+                } else {
+                    const error = await response.json();
+                    console.error("Failed to update post:", error);
+                    alert("Failed to update post. Please try again.");
+                }
+            } catch (error) {
+                console.error("Fetch error:", error);
+                alert("An error occurred. Please check the console.");
+            }
+        });
+</script>
+<%- include("partials/edit-footer.ejs") %>

@@ -1,0 +1,24 @@
+<%- include("partials/login-header.ejs") %>
+
+<div class="login-form">
+    <h2 class="blog-view-subtitle">Login to share your thoughts</h2>
+    <form action="/new-blog" method="post">
+        <div class="form-group vtiny-bm">
+            <label for="email" class="form-label blue-text vbold-text xtiny-bm">Email</label>
+            <input type="email" class="form-control" name="email" id="email" placeholder="Enter your email" required>
+        </div>
+        <div class="form-group vtiny-bm">
+            <label for="password" class="form-label blue-text vbold-text xtiny-bm">Password</label>
+            <input type="password" class="form-control" name="password" id="password" placeholder="Enter your password" required>
+        </div>
+        <div class="input-group d-grid login-button">
+            <button type="submit" class="btn btn-primary btn-sm vtiny-bm">Click to Login</button>
+            <p class="vbold-text tiny-bm">Don't have an account? Click <a href="/signup">here</a> to create one.</p>
+            <% if (locals.signupInfo) { %>
+             <h6 class="bold-text red-text"><%= signupInfo.message %></h6>
+            <% } %>
+        </div>
+    </form>
+</div>
+
+<%- include("partials/login-footer.ejs") %>

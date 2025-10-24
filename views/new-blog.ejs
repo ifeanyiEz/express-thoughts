@@ -1,0 +1,114 @@
+<%- include("partials/login-header.ejs") %>
+
+<div class="p-5 rounded">
+    <% if (locals.thisLogin && thisLogin.firstName) { %>
+        <div class="two-divs">
+            <h2 class="blog-view-subtitle large-tbm">Welcome back, <span class="vbold-text"><%= thisLogin.firstName + " " + thisLogin.lastName %></span></h2>
+            <div class="create-cols">
+                <div class="new-blog-form grey-bg">
+                    <h4 class="blue-text vbold-text">Write a new post</h4>
+                    <hr class="large-bm">
+                    <form action="/blogs" method="post" class="form-flex" id="blogForm">
+                        <div>
+                            <div class="form-section vtiny-bm">
+                                <div class="form-group vtiny-bm">
+                                    <label for="blogTitle" class="form-label blue-text vbold-text xtiny-bm">Blog Title</label>
+                                    <input type="text" class="form-control" name="blogTitle" id="blogTitle" placeholder="The topic you want to discuss" required>
+                                </div>
+                                <div class="form-group vtiny-bm">
+                                    <label for="category" class="form-label blue-text vbold-text xtiny-bm">Category</label> 
+                                    <select class="form-select" name="category" id="category" required> 
+                                        <option>Choose a category</option> 
+                                        <option>Humanity</option>
+                                        <option>Civilization & Power</option>
+                                        <option>Science, Technology & the Future</option>
+                                        <option>Personal Growth & Creativity</option>   
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-section vtiny-bm">
+                                <div class="form-group vtiny-bm">
+                                    <label for="subCategory" class="form-label blue-text vbold-text xtiny-bm">Sub-category</label> 
+                                    <select class="form-select" name="subCategory" id="subCategory" required> 
+                                        <option value="">Choose a sub-category</option>  
+                                    </select>
+                                </div>
+                                <div class="form-group vtiny-bm">
+                                    <label for="heroImage" class="form-label blue-text vbold-text xtiny-bm">Hero Image URL</label>
+                                    <input type="text" class="form-control" name="heroImage" id="heroImage" placeholder="The address of your hero image">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group xtiny-bm">
+                            <label for="blogBody" class="form-label blue-text vbold-text xtiny-bm">Content</label>
+                        </div>
+                        <div id="blogBody" class="form-control tiny-bm" name="blogBody"></div>
+                        <hr class="large-bm">
+                        <div class="form-bottom vtiny-bm">
+                            <div class="form-group vtiny-bm">
+                                <label for="createDate" class="form-label blue-text vbold-text xtiny-bm">Date Written</label>
+                                <input type="text" class="form-control" name="createDate" id="createDate" value="<%= " " + new Date().toLocaleString(); %>" readonly>
+                            </div>
+                            <div class="form-group vtiny-bm">
+                                <label for="tags" class="form-label blue-text vbold-text xtiny-bm">Key Words</label>
+                                <input type="text" class="form-control" name="tags" id="tags" placeholder="Separate entries by comas. Eg: humanity, self-help, et c.">
+                            </div>
+                        </div>
+                        <div class="form-bottom vtiny-bm">
+                            <div class="form-group vtiny-bm">
+                                <label for="writtenBy" class="form-label blue-text vbold-text xtiny-bm"> Written By</label>
+                                <input type="text" class="form-control" name="writtenBy" id="writtenBy" value="<%= thisLogin.firstName + " " + thisLogin.lastName %>" readonly>
+                            </div>
+                            <div class="form-group vtiny-bm">
+                                <label for="contactEmail" class="form-label blue-text vbold-text xtiny-bm">Contact Email</label>
+                                <input type="text" class="form-control" name="contactEmail" id="contactEmail" value="<%= thisLogin.email %>" readonly>
+                            </div>
+                        </div>
+                        <div class="input-group d-grid login-button">
+                            <button type="submit" class="btn btn-primary regular-text bg-shadow">Click to Publish</button>
+                        </div>
+                    </form>
+                </div>
+                <div id="recent-blogs" class="recent-blogs">
+                    <% if (locals.allBlogs && allBlogs.length > 0) { %>
+                        <h4 class="blue-text vbold-text">Read a recently published post</h4>
+                        <hr class="large-bm">
+                        <div id="blog-list" class="form-flex">
+                            <% for( let blogIndex = 0; blogIndex < Math.min(allBlogs.length, 5); blogIndex++ ) { %>
+                                <div class="recentBlog-item">
+                                    <img class="heroImg-view vtiny-bm" src="<%= allBlogs[blogIndex]["heroImage"] %>" alt="Recent Blog Item Image">
+                                    <div class="form-flex">
+                                        <h6 class="bold-text"><%= allBlogs[blogIndex]["title"] %></h6>
+                                        <div class="recentBlog-meta">
+                                            <p class="blue-text"><%= allBlogs[blogIndex]["publishedAt"] %></p>
+                                            <h6 class="right-text"><a href="/blogs/<%= allBlogs[blogIndex]["slug"] %>"><button class="btn btn-xs btn-light bold-text blue-text yellow-bg-shadow" type="button">Read the full post</button></a></h6>
+                                        </div>
+                                    </div>
+                                </div>
+                                <hr class="vtiny-bm">
+                            <% } %>
+                        </div>
+                    <% } else {%>
+                        <h4 class="blue-text vbold-text">Your new blog will appear here</h4>
+                        <hr class="large-bm">
+                    <%} %>
+                    <div class="login-button logout-div">
+                        <button type="link" class="btn btn-orange white-text regular-text bg-shadow"><a class="nav-link" href="/logout">Click to Logout</a></button>
+                    </div>
+                </div>
+            </div>
+        </div> 
+    <% } else {%>
+        <div class="login-form">
+            <h2 class="blog-view-subtitle large-bm">
+                Please login to write a new post.
+            </h2>
+            <div class="d-grid login-button">
+                <h5><a href="/login"><button class="btn btn-sm btn-primary" type="button">Click to Login</button></a>
+                </h5>
+            </div>
+        </div>
+    <%} %>
+</div>
+
+<%- include("partials/login-footer.ejs") %>
