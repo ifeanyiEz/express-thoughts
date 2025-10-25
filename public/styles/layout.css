@@ -322,6 +322,10 @@ footer .copyright {
         padding: 0.5rem !important;
     }
 
+    .my-p2 {
+        padding: 1rem !important;
+    }
+
     .main-content::before {
         font-size: 6rem;
     }
@@ -375,6 +379,10 @@ footer .copyright {
     #featured-blogs {
         grid-template-columns: 1fr;
         grid-template-rows: auto auto auto auto;
+    }
+
+    #canvas {
+        margin-bottom: 8rem;
     }
 
     #canvas-categories {
@@ -434,10 +442,6 @@ footer .copyright {
     .form-bottom {
         grid-template-columns: 1fr !important;
         grid-template-rows: 1fr !important;
-    }
-
-    #footer {
-        height: 49rem;
     }
 }
 

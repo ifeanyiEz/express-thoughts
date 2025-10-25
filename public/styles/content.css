@@ -604,11 +604,15 @@ a {
 @media (max-width: 576px) {
 
     .blog-view-title {
-        font-size: 3rem;
+        font-size: 2.2rem;
     }
 
     .blog-view-subtitle {
         font-size: 1.8rem;
+    }
+
+    .regular-text {
+        font-weight: 400;
     }
 }
 
