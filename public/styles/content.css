@@ -139,6 +139,26 @@ a {
     margin-bottom: 2.25rem !important;
 }
 
+.xtiny-tm {
+    margin-top: 0.25rem !important;
+}
+
+.vtiny-tm {
+    margin-top: 0.75rem !important;
+}
+
+.large-tm {
+    margin-top: 1.25rem !important;
+}
+
+.tiny-tm {
+    margin-top: 1rem !important;
+}
+
+.vlarge-tm {
+    margin-top: 2.25rem !important;
+}
+
 .xtiny-sm {
     margin-left: 0.5rem !important;
     margin-right: 0.5rem !important;
