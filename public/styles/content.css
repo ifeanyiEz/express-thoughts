@@ -329,18 +329,6 @@ a {
     grid-template-rows: 1fr;
 }
 
-.blog-view-title {
-    font-size: 4rem;
-    font-weight: 200;
-    margin-bottom: 1rem;
-}
-
-.blog-view-subtitle {
-    font-size: 2.2rem;
-    font-weight: 300;
-    margin-bottom: 0.8rem;
-}
-
 .grey-bg {
     background-color: #fbfbfb;
     box-shadow: 2px 2px 20px #e3e3e3;
@@ -513,13 +501,6 @@ a {
     display: grid;
     grid-template-columns: 3fr 2fr;
     grid-template-rows: 1fr;
-}
-
-#blog-view-right {
-    display: grid;
-    gap: 1.5rem;
-    grid-template-columns: auto auto auto;
-    grid-template-rows: auto auto;
 }
 
 .img-hero-view {
